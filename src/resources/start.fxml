@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" prefHeight="412.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.jsmod2.client.panel.StartController">
+<AnchorPane fx:id="pane" prefHeight="412.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cn.jsmod2.client.StartController">
     <children>
       <TabPane prefHeight="412.0" prefWidth="621.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>

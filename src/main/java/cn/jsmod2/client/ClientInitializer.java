@@ -1,4 +1,4 @@
-package cn.jsmod2.client.panel;
+package cn.jsmod2.client;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;

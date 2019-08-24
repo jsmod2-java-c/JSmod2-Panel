@@ -1,4 +1,4 @@
-package cn.jsmod2.client.panel;
+package cn.jsmod2.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

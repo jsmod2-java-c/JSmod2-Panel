@@ -1,17 +1,24 @@
-package cn.jsmod2.client.panel;
+package cn.jsmod2.client;
 
+import com.alibaba.fastjson.JSON;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 public class Client {
     private static class SingletonHolder {
         static final Client instance = new Client();
     }
+
+    public String ipAddress;
+
+    public int port;
+
     public static Client getInstance(){
         return SingletonHolder.instance;
     }
@@ -29,22 +36,21 @@ public class Client {
                 .channel(NioSocketChannel.class)
                 .handler(clientInitializer);
     }
-    public void connect(){
+    public void connect(String ip,int port){
         //192.168.43.51测试端口8766 192.168.43.102 线上端口8765
         try {
-            this.cf = b.connect("127.0.01", 8888).sync();
-            System.out.println("远程服务器已经连接, 可以进行数据交换..");
+            this.cf = b.connect(ip, port).sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
         }
     }
-    public ChannelFuture getChannelFuture(){
+    public ChannelFuture getChannelFuture(String ip,int port){
         if(this.cf == null) {
-            this.connect();
+            this.connect(ip,port);
         }
         if(!this.cf.channel().isActive()){
-            this.connect();
+            this.connect(ip,port);
         }
         return this.cf;
     }
@@ -57,8 +63,17 @@ public class Client {
         }
     }
     public String setMessage(String msg) {
+        if(ipAddress == null){
+            return JSON.toJSONString(new HashMap<String,String>(){
+                {
+                    put("status","500");
+                    put("message","unknown ipAddress");
+                    put("value","null");
+                }
+            });
+        }
         try {
-            ChannelFuture cf = getInstance().getChannelFuture();//单例模式获取ChannelFuture对象
+            ChannelFuture cf = getInstance().getChannelFuture(ipAddress,port);//单例模式获取ChannelFuture对象
             cf.channel().writeAndFlush(msg);
             //发送数据控制门闩加一
             lathc = new CountDownLatch(1);
@@ -70,6 +85,7 @@ public class Client {
         }
         return null;
     }
+
 
 
 }

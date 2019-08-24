@@ -1,4 +1,4 @@
-package cn.jsmod2.client.panel;
+package cn.jsmod2.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,7 +57,7 @@ public class StartController {
     public void onSend(ActionEvent event){
         String text = sendText.getText();
         strings.add(text);
-        Client.getInstance().setMessage(new JsonRequester().append("type","command").append("command",text).toJSON());
+        Client.getInstance().setMessage(new JsonRequester().append("type","command").append("command",text).sendOut().getMessage());
         sendText.clear();
         integer.set(0);
     }
