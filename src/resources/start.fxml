@@ -5,8 +5,8 @@
     !author MagicLu550
 -->
 
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -52,7 +52,7 @@
                         <TextField fx:id="ipText" layoutX="75.0" layoutY="14.0" onAction="#onIpText" prefHeight="27.0" prefWidth="211.0" promptText="127.0.0.1:19935" />
                         <Text layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP:Port" />
                         <Text layoutX="21.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                        <Button layoutX="294.0" layoutY="14.0" mnemonicParsing="false" text="OK" />
+                        <Button layoutX="294.0" layoutY="14.0" mnemonicParsing="false" onAction="#onIpOK" text="OK" />
                      </children>
                   </AnchorPane>
               </content>

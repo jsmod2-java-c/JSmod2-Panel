@@ -21,7 +21,7 @@ public class StartController {
 
     private List<String> strings = new ArrayList();
 
-    private ConsoleOutputStream stream = new ConsoleOutputStream();
+    private ConsoleOutputStream stream = ConsoleOutputStream.getStream();
 
 
     private AtomicInteger integer = new AtomicInteger(0);
@@ -49,9 +49,38 @@ public class StartController {
     public Button back;
 
     @FXML
+    public TextField ipText;
+
+    @FXML
     private void initialize(){
         stream.setTextArea(consoleTextArea);
+        new Thread(()->{
+            while (true){
+                Response response = new JsonRequester().append("type","log").sendOut();
+                stream.write(response.getMessage());
+            }
+        }).start();
     }
+
+    @FXML
+    public void onIpOK(){
+        String text = ipText.getText();
+        if(text.contains(":")){
+            String[] map = text.split(":");
+            Client.getInstance().ipAddress = map[0];
+            Client.getInstance().port = Integer.parseInt(map[1]);
+        }else{
+            Client.getInstance().ipAddress = text;
+            Client.getInstance().port = 20020;
+        }
+        ipText.setDisable(true);
+    }
+
+    @FXML
+    public void onIpText(){
+
+    }
+
 
     @FXML
     public void onSend(ActionEvent event){

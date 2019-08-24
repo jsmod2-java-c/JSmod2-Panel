@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ui/start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("start.fxml"));
         primaryStage.setTitle("Jsmod2-Control-Panel");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, 650, 450));

@@ -14,6 +14,13 @@ import java.io.OutputStream;
  * @Version: 1.0
  */
 public class ConsoleOutputStream extends OutputStream {
+
+    static {
+        stream = new ConsoleOutputStream();
+    }
+
+    private static ConsoleOutputStream stream;
+
     private TextArea textArea;
     private int lineHeight = 100;
     private volatile boolean scroll = true;
@@ -42,7 +49,7 @@ public class ConsoleOutputStream extends OutputStream {
         }
     }
 
-    public void write(String string) throws IOException {
+    public void write(String string){
         if (textArea == null) {
             return;
         }
@@ -78,5 +85,9 @@ public class ConsoleOutputStream extends OutputStream {
 
     public void setTextArea(TextArea textArea) {
         this.textArea = textArea;
+    }
+
+    public static ConsoleOutputStream getStream() {
+        return stream;
     }
 }
