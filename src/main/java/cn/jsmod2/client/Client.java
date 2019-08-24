@@ -27,6 +27,7 @@ public class Client {
     private ChannelFuture cf ;
     private ClientInitializer clientInitializer;
     private CountDownLatch lathc;
+
     private Client(){
         lathc = new CountDownLatch(0);
         clientInitializer = new ClientInitializer(lathc);
@@ -37,7 +38,6 @@ public class Client {
                 .handler(clientInitializer);
     }
     public void connect(String ip,int port){
-        //192.168.43.51测试端口8766 192.168.43.102 线上端口8765
         try {
             this.cf = b.connect(ip, port).sync();
         } catch (InterruptedException e) {
@@ -67,13 +67,13 @@ public class Client {
             return JSON.toJSONString(new HashMap<String,String>(){
                 {
                     put("status","500");
-                    put("message","unknown ipAddress");
+                    put("message","null");
                     put("value","null");
                 }
             });
         }
         try {
-            ChannelFuture cf = getInstance().getChannelFuture(ipAddress,port);//单例模式获取ChannelFuture对象
+            ChannelFuture cf = this.getChannelFuture(ipAddress,port);//单例模式获取ChannelFuture对象
             cf.channel().writeAndFlush(msg);
             //发送数据控制门闩加一
             lathc = new CountDownLatch(1);

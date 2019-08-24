@@ -21,6 +21,8 @@ public class ClientHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         result = (String) msg;
+        System.out.println(result);
+        System.out.println(result);
         lathc.countDown();// 消息接收后释放同步锁，lathc是从Client加一传回来的
     }
 

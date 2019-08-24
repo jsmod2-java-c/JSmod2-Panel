@@ -56,8 +56,16 @@ public class StartController {
         stream.setTextArea(consoleTextArea);
         new Thread(()->{
             while (true){
-                Response response = new JsonRequester().append("type","log").sendOut();
-                stream.write(response.getMessage());
+                try {
+                    Response response = new JsonRequester().append("type","log").sendOut();
+                    if (response != null) {
+                        if (!response.getMessage().equals("null")) {
+                            stream.write(response.getMessage());
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
@@ -67,7 +75,7 @@ public class StartController {
         String text = ipText.getText();
         if(text.contains(":")){
             String[] map = text.split(":");
-            Client.getInstance().ipAddress = map[0];
+            Client.getInstance().ipAddress = map[0].trim();
             Client.getInstance().port = Integer.parseInt(map[1]);
         }else{
             Client.getInstance().ipAddress = text;
